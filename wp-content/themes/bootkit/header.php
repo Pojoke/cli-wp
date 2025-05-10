@@ -14,7 +14,7 @@
         <link href="css/styles.css" rel="stylesheet" />
         <?php wp_head(); ?>
     </head>
-    <body class="d-flex flex-column h-100">
+    <body class="d-flex flex-column h-100" <?php body_class();?>>
         <main class="flex-shrink-0">
             <!-- Navigation-->
             <nav 
