@@ -21,12 +21,13 @@
     <body class="d-flex flex-column h-100">
         <main class="flex-shrink-0">
             <!-- Navigation-->
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <nav 
+            class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="container px-5">
                     <a class="navbar-brand" href="index.html">Start Bootstrap</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <!-- <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
                             <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
                             <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
@@ -46,7 +47,86 @@
                                     <li><a class="dropdown-item" href="portfolio-item.html">Portfolio Item</a></li>
                                 </ul>
                             </li>
-                        </ul>
+                        </ul> -->
+                       
+<?php  if (has_nav_menu('primary')) {
+    wp_nav_menu(array(
+        'theme_location' => 'primary',
+        'depth' => 2,
+        'container' => false,
+        'menu_class' => 'navbar-nav ml-auto',
+        'fallback_cb' => false,
+       'walker' => new Bootkit_Nav_Walker(),
+    ));
+}
+
+
+
+class Bootkit_Nav_Walker extends Walker_Nav_Menu
+{
+    public function start_lvl(&$output, $depth = 0, $args = array())
+    {
+        $output .= '<ul class="dropdown-menu dropdown-menu-right">';
+    }
+
+    public function start_el(&$output, $item, $depth = 0, $args = array(), $id = 0)
+    {
+        $item_html = '';
+        parent::start_el($item_html, $item, $depth, $args);
+        if ($item->is_dropdown && $depth === 0) {
+            $item_html = str_replace('<a', '<a class="nav-link dropdown-toggle" data-toggle="dropdown"', $item_html);
+            $item_html = str_replace('</a>', ' <b class="caret"></b></a>', $item_html);
+        } elseif ($depth === 0) {
+            $item_html = str_replace('<a', '<a class="nav-link"', $item_html);
+        } elseif ($depth === 1) {
+            $item_html = str_replace('<a', '<a class="dropdown-item"', $item_html);
+        }
+        $output .= $item_html;
+    }
+
+    public function display_element($element, &$children_elements, $max_depth, $depth = 0, $args, &$output)
+    {
+        if ($element->current) {
+            $element->classes[] = 'active';
+        }
+
+        $element->is_dropdown = !empty($children_elements[$element->ID]);
+        if ($element->is_dropdown) {
+            if ($depth === 0) {
+                $element->classes[] = 'nav-item dropdown';
+            } elseif ($depth === 1) {
+                $element->classes[] = 'dropdown-submenu';
+            }
+        } else {
+            if ($depth === 0) {
+                $element->classes[] = 'nav-item';
+            }
+        }
+
+        parent::display_element($element, $children_elements, $max_depth, $depth, $args, $output);
+    }
+
+    public function end_el(&$output, $item, $depth = 0, $args = [], $id = 0)
+    {
+        $output .= '</li>';
+    }
+
+    public function end_lvl(&$output, $depth = 0, $args = [])
+    {
+        $output .= '</ul>';
+    }
+}
+
+
+
+
+
+
+
+
+
+
+?>
                     </div>
                 </div>
             </nav>
@@ -229,6 +309,7 @@
                     </div>
                 </div>
             </div>
+           
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
