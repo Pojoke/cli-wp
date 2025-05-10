@@ -1,6 +1,6 @@
 
 <?php
-get_header();?>
+get_header(); ?>
 
 
 
@@ -110,7 +110,9 @@ get_header();?>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 mb-5">
+                        <?php get_sidebar();?>
+                        <!-- <div class="col-lg-4 mb-5">
+                        
                             <div class="card h-100 shadow border-0">
                                 <img class="card-img-top" src="https://dummyimage.com/600x350/6c757d/343a40" alt="..." />
                                 <div class="card-body p-4">
@@ -131,7 +133,8 @@ get_header();?>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                       
+                    </div> -->
                     <!-- Call to action-->
                     <aside class="bg-primary bg-gradient rounded-3 p-4 p-sm-5 mt-5">
                         <div class="d-flex align-items-center justify-content-between flex-column flex-xl-row text-center text-xl-start">
@@ -147,9 +150,11 @@ get_header();?>
                                 <div class="small text-white-50">We care about privacy, and will never share your data.</div>
                             </div>
                         </div>
+                        
                     </aside>
                 </div>
             </section>
+           
         </main>
         
-        <?php get_footer();?>
+        <?php get_footer(); ?>
