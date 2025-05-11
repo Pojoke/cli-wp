@@ -93,7 +93,14 @@ if (has_post_thumbnail()) {
         ?>
         <hr>
         <!-- Post Content -->
-       <?php the_content();?>
+       <?php the_content();
+        $defaults = array(
+            'before' => '<div class="row justify-content-center align-items-center">' . __('Pages:'),
+            'after' => '</div>',
+        );
+        wp_link_pages($defaults);
+         edit_post_link();
+       ?>
         <hr>
 <!-- Tag cloud -->
             <?php the_tags();?>
