@@ -15,5 +15,6 @@ function bootkit_enqueue()
     //     '/assets/vendor/bootstrap/js/bootstrap.bundle.min.js', 'jquery', $ver, true);
     // wp_enqueue_script('jquery');
     wp_enqueue_script('bootkit_bootstrap');
+    wp_enqueue_style('style', get_stylesheet_uri());
 
 }
